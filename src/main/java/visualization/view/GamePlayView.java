@@ -5,9 +5,12 @@ import ija.ijaProject.common.Side;
 import ija.ijaProject.game.levels.LevelManager;
 import ija.ijaProject.game.Game;
 import ija.ijaProject.game.levels.GameLevels;
+//import ija.ijaProject.game.levels.NodeStateManager;
+import ija.ijaProject.game.levels.NodeStateManager;
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
@@ -82,6 +85,7 @@ public class GamePlayView {
         //this.swingNode = GameLevels.createGameLevel(levelNumber, difficulty, /* callback */ null);
         //this.swingNode = GameLevels.createGameLevel(levelNumber, difficulty, this::handleLevelCompleted);
         //this.presenter = (EnvPresenter) swingNode.getUserData();
+
         // Check if this level was already completed before
         levelAlreadyCompleted = LevelManager.getInstance().isLevelCompleted(levelNumber, difficulty);
 
@@ -136,7 +140,16 @@ public class GamePlayView {
 
         // Set up game completion listener with a delay to ensure proper initialization
         Platform.runLater(this::setupGameCompletionListener);
+
+        // If the level is already completed, show the completion overlay after a short delay
+        if (levelAlreadyCompleted) {
+            Platform.runLater(() -> {
+                // Show the completion overlay immediately
+                showLevelCompleteOverlay();
+            });
+        }
     }
+
     private EnvPresenter getPlayPresenter() {
         return (EnvPresenter) gameNode.getUserData();
     }
@@ -275,6 +288,8 @@ public class GamePlayView {
         infoButton.setOnAction(e -> openInfoWindow());
         header.getChildren().add(infoButton);
 
+
+
         return header;
     }
 
@@ -388,13 +403,12 @@ public class GamePlayView {
 
         // Set button actions
         retryButton.setOnAction(e -> {
-
             if (infoStage != null) {
                 infoStage.close();
                 infoStage = null;
             }
             hideLevelCompleteOverlay();
-            restartLevel();
+            retryCurrentLevel();
         });
 
         nextLevelButton.setOnAction(e -> {
@@ -502,7 +516,7 @@ public class GamePlayView {
 
         gameNodeCheckTimeline = new Timeline(
                 new KeyFrame(
-                        Duration.millis(500), // Проверяем каждые 500 мс
+                        Duration.millis(200), // Проверяем каждые 500 мс
                         event -> {
                             try {
                                 // Проверяем, инициализирован ли gameNode и его userData
@@ -591,7 +605,8 @@ public class GamePlayView {
         // Mark the level as completed in LevelManager
         LevelManager.getInstance().markLevelCompleted(levelNumber, difficulty);
         levelAlreadyCompleted = true;
-
+        // Clear any saved state for this level since it's completed
+        NodeStateManager.getInstance().clearNodeStates(levelNumber, difficulty);
 
         // Show the completion overlay
         showLevelCompleteOverlay();
@@ -705,13 +720,105 @@ public class GamePlayView {
     }
 
     /**
+     * Resets the current level's progress while keeping other levels intact.
+     */
+    private void retryCurrentLevel() {
+        // Close info window if open
+        if (infoStage != null) {
+            infoStage.close();
+            infoStage = null;
+        }
+
+        // Hide level complete overlay if visible
+        if (levelCompleteOverlay.isVisible()) {
+            hideLevelCompleteOverlay();
+        }
+
+        // Reset the progress for this specific level
+        LevelManager.getInstance().resetLevelCompletion(levelNumber, difficulty);
+        NodeStateManager.getInstance().clearNodeStates(levelNumber, difficulty);
+
+        // Reset the level already completed flag
+        levelAlreadyCompleted = false;
+
+        // Restart the level
+        restartLevel();
+
+        // Show confirmation message
+        showTemporaryMessage("Level reset successfully!");
+    }
+
+    /**
+     * Shows a temporary message in the UI.
+     *
+     * @param message The message to show
+     */
+    private void showTemporaryMessage(String message) {
+        // Create a text node for the message
+        Text messageText = new Text(message);
+        messageText.setFont(Font.font("System", FontWeight.BOLD, 18));
+        messageText.setFill(Color.WHITE);
+
+        // Create a container with a background
+        StackPane messageContainer = new StackPane(messageText);
+        messageContainer.setStyle(
+                "-fx-background-color: rgba(14, 165, 233, 0.7);" +
+                        "-fx-background-radius: 10px;" +
+                        "-fx-padding: 15px 25px;"
+        );
+        messageContainer.setOpacity(0);
+
+        // Position at the top center of the screen
+        StackPane.setAlignment(messageContainer, Pos.TOP_CENTER);
+        StackPane.setMargin(messageContainer, new Insets(100, 0, 0, 0));
+
+        // Add to the root
+        root.getChildren().add(messageContainer);
+
+        // Fade in
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(300), messageContainer);
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(1);
+
+        // Pause
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+        // Fade out
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(500), messageContainer);
+        fadeOut.setFromValue(1);
+        fadeOut.setToValue(0);
+        fadeOut.setOnFinished(e -> root.getChildren().remove(messageContainer));
+
+        // Play the sequence
+        fadeIn.setOnFinished(e -> pause.play());
+        pause.setOnFinished(e -> fadeOut.play());
+        fadeIn.play();
+    }
+
+    /**
      * Sets the handler for the back button.
      *
      * @param handler The event handler
      */
     public void setOnBackAction(EventHandler<ActionEvent> handler) {
         this.backHandler = handler;
-        backButton.setOnAction(handler);
+
+        // Create a new handler that first saves state, then calls the original handler
+        EventHandler<ActionEvent> wrappedHandler = e -> {
+            // Add explicit logging to verify this is being called
+            System.out.println("Back button clicked - saving state before exit");
+
+            // Save the state before exiting
+            saveStateOnExit();
+
+            // Then call the original handler
+            if (handler != null) {
+                handler.handle(e);
+            }
+        };
+
+        // Set the wrapped handler on the back button
+        backButton.setOnAction(wrappedHandler);
     }
 
     /**
@@ -741,12 +848,51 @@ public class GamePlayView {
         return root;
     }
 
+    public void saveStateOnExit() {
+        try {
+            System.out.println("saveStateOnExit called for level " + levelNumber + " at difficulty " + difficulty);
+
+            if (gameNode != null) {
+                EnvPresenter presenter = getPlayPresenter();
+                if (presenter != null) {
+                    // Get the game from the presenter
+                    Object environment = presenter.getEnvironment();
+                    if (environment instanceof Game) {
+                        Game game = (Game) environment;
+
+                        // Don't save if the game is already completed
+                        if (levelAlreadyCompleted) {
+                            System.out.println("Level " + levelNumber + " at difficulty " + difficulty +
+                                    " is already completed, not saving state");
+                            return;
+                        }
+
+                        // Save the node states
+                        boolean saved = NodeStateManager.getInstance().saveNodeStates(levelNumber, difficulty, game);
+                        System.out.println("Saved game state for level " + levelNumber + " at difficulty " + difficulty + ": " + saved);
+                    } else {
+                        System.err.println("Environment is not a Game instance: " +
+                                (environment != null ? environment.getClass().getName() : "null"));
+                    }
+                } else {
+                    System.err.println("Could not get presenter from gameNode");
+                }
+            } else {
+                System.err.println("gameNode is null, cannot save state");
+            }
+        } catch (Exception e) {
+            System.err.println("Error saving game state: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Cleans up resources used by this view.
      * This should be called when the view is no longer needed.
      */
     public void cleanup() {
         System.out.println("GamePlayView cleanup called");
+        saveStateOnExit();
 
         // Stop the game bridge if it exists
         if (gameBridge != null) {

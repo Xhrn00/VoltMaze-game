@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ae303516-a129-4f7b-91bc-007b476fec8e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/ija/ijaProject/game/levels/MoveHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ija/ijaProject/game/levels/NodeStateManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/level_progress.dat" beforeDir="false" afterPath="$PROJECT_DIR$/level_progress.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ija/ijaProject/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ija/ijaProject/MainApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ija/ijaProject/game/levels/GameLevels.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ija/ijaProject/game/levels/GameLevels.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ija/ijaProject/game/levels/LevelManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ija/ijaProject/game/levels/LevelManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/visualization/view/GamePlayView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/visualization/view/GamePlayView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/MainApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/MainApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/common/GameNode$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/common/GameNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/common/GameNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/common/Position.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/common/Position.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/common/Side.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/common/Side.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/levels/GameLevels$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/levels/GameLevels.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/levels/GameLevels.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/levels/LevelManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/levels/LevelManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/settings/LanguageManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/settings/LanguageManager$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/settings/LanguageManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/settings/LanguageManager$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/settings/LanguageManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/settings/LanguageManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/settings/SettingsManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/settings/SettingsManager$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/settings/SettingsManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/settings/SettingsManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/settings/SoundManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/settings/SoundManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/visualization/EnvPresenter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/visualization/EnvPresenter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/visualization/EnvTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/visualization/EnvTester.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/visualization/view/FieldView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/visualization/view/FieldView$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/visualization/view/GamePlayView$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/visualization/view/GamePlayView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/visualization/view/GamePlayView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/visualization/view/InfoPresenter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/visualization/view/InfoPresenter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/voltmaze_settings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/voltmaze_settings.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaFXApplication" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2w2UqQvtsa5GFVXCCpNIK1jHqWQ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/IJA_Project",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\IJA_Project\src" />
+      <recent name="C:\IJA_Project" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="IJA_Project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="IJA_Project" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="IJA_Project" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Python.FlaskServer">
+      <module name="IJA_Project" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="IJA_Project" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.59" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.59" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ae303516-a129-4f7b-91bc-007b476fec8e" name="Changes" comment="" />
+      <created>1745239352572</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1745239352572</updated>
+      <workItem from="1745239353799" duration="3323000" />
+      <workItem from="1745243118733" duration="7837000" />
+      <workItem from="1745330718568" duration="9701000" />
+      <workItem from="1745358915480" duration="268000" />
+      <workItem from="1745499635784" duration="20457000" />
+      <workItem from="1745759856606" duration="8668000" />
+      <workItem from="1745837083180" duration="15530000" />
+      <workItem from="1745924298306" duration="2450000" />
+      <workItem from="1745927070983" duration="7474000" />
+      <workItem from="1746013948355" duration="7110000" />
+      <workItem from="1746097374599" duration="9047000" />
+      <workItem from="1746306714518" duration="4751000" />
+      <workItem from="1746312148145" duration="3418000" />
+      <workItem from="1746702751381" duration="32857000" />
+      <workItem from="1746781578839" duration="110000" />
+      <workItem from="1746781702212" duration="736000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

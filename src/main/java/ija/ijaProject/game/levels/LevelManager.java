@@ -118,6 +118,25 @@ public class LevelManager {
     }
 
     /**
+     * Resets the completion status for a specific level and difficulty.
+     *
+     * @param levelNumber The level number
+     * @param difficulty The difficulty level
+     */
+    public void resetLevelCompletion(int levelNumber, int difficulty) {
+        String levelKey = difficulty + "-" + levelNumber;
+
+        // Remove this level from the completed levels set
+        if (completedLevels.contains(levelKey)) {
+            completedLevels.remove(levelKey);
+            System.out.println("Reset completion status for level " + levelNumber + " at difficulty " + difficulty);
+
+            // Save the updated completion status
+            saveProgress();
+        }
+    }
+
+    /**
      * Gets all completed levels.
      *
      * @return A set of level keys in the format "difficulty-levelNumber"
