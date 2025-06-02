@@ -12,11 +12,10 @@
 package visualization.view;
 
 import ija.ijaProject.common.GameNode;
+import ija.ijaProject.game.levels.GameMove;
 import ija.ijaProject.common.Side;
-import ija.ijaProject.game.levels.LevelManager;
+import ija.ijaProject.game.levels.*;
 import ija.ijaProject.game.Game;
-import ija.ijaProject.game.levels.GameLevels;
-import ija.ijaProject.game.levels.NodeStateManager;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -44,11 +43,14 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import visualization.EnvPresenter;
 import visualization.common.ToolEnvironment;
+import javafx.scene.control.Label;
+
 
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.Field;
+import java.util.List;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -83,7 +85,12 @@ public class GamePlayView {
     private Button stepForwardButton;
     private Button playModeButton;
 
+    private Button simulationButton;
+    private boolean simulationMode;
+    private GameReplay replay;
+
     private EnvPresenter playPresenter;
+
     /**
      * Vytvoří GamePlayView pro hru s level a difficulty..
      *
@@ -91,13 +98,12 @@ public class GamePlayView {
      * @param levelNumber The level number
      * @param difficulty The difficulty level (0=Beginner, 1=Intermediate, 2=Advanced)
      */
-    public GamePlayView(Stage stage, int levelNumber, int difficulty) {
+    public GamePlayView(Stage stage, int levelNumber, int difficulty, boolean simulationMode) {
         this.stage = stage;
         this.levelNumber = levelNumber;
         this.difficulty = difficulty;
-        //this.swingNode = GameLevels.createGameLevel(levelNumber, difficulty, /* callback */ null);
-        //this.swingNode = GameLevels.createGameLevel(levelNumber, difficulty, this::handleLevelCompleted);
-        //this.presenter = (EnvPresenter) swingNode.getUserData();
+        this.simulationMode = simulationMode;
+
         // Check if this level was already completed before
         levelAlreadyCompleted = LevelManager.getInstance().isLevelCompleted(levelNumber, difficulty);
 
@@ -110,7 +116,8 @@ public class GamePlayView {
         layout.setTop(header);
 
         System.out.println("Starting game with level: " + levelNumber + ", difficulty: " + difficulty);
-        gameNode = GameLevels.createGameLevel(levelNumber, difficulty, this::handleLevelCompleted);
+        gameNode = GameLevels.createGameLevel(levelNumber, difficulty, this::handleLevelCompleted, simulationMode);
+        gameNode.setMouseTransparent(simulationMode); // blocks mouse events only
         System.out.println("GameNode: " + gameNode);
         StackPane gameContainer = new StackPane(gameNode);
         gameContainer.setPadding(new Insets(10));
@@ -135,6 +142,13 @@ public class GamePlayView {
         levelCompleteOverlay.setOpacity(0);
 
         root.getChildren().addAll(layout, levelCompleteOverlay);
+
+        if (simulationMode) {
+            Label simBanner = new Label("SIMULATION MODE");
+            simBanner.setStyle("-fx-background-color: #0EA5E9; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 8 20;");
+            StackPane.setAlignment(simBanner, Pos.TOP_CENTER);
+            root.getChildren().add(simBanner);
+        }
 
         Platform.runLater(this::setupGameCompletionListener);
         if (levelAlreadyCompleted) {
@@ -211,9 +225,7 @@ public class GamePlayView {
         header.setAlignment(Pos.CENTER_LEFT);
         header.setPadding(new Insets(15, 20, 15, 20));
         header.setSpacing(20);
-
         header.setStyle("-fx-background-color: rgba(15, 23, 42, 0.7);");
-
 
         backButton = new Button("← Back to Levels");
         backButton.setStyle(
@@ -227,13 +239,10 @@ public class GamePlayView {
                         "-fx-font-weight: bold;" +
                         "-fx-padding: 8 15;"
         );
-
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.web("#0EA5E9"));
         shadow.setRadius(10);
-        shadow.setSpread(0);
         backButton.setEffect(shadow);
-
         addButtonHoverEffect(backButton);
 
         String difficultyName = switch (difficulty) {
@@ -246,11 +255,7 @@ public class GamePlayView {
         levelText = new Text(difficultyName + " - Level " + levelNumber);
         levelText.setFont(Font.font("System", FontWeight.BOLD, 20));
         levelText.setFill(Color.web("#7DD3FC"));
-
-        Glow glow = new Glow(0.5);
-        levelText.setEffect(glow);
-
-        header.getChildren().addAll(backButton, levelText);
+        levelText.setEffect(new Glow(0.5));
 
         Button infoButton = new Button("Hints");
         infoButton.setStyle(
@@ -266,42 +271,68 @@ public class GamePlayView {
         );
         addButtonHoverEffect(infoButton);
         infoButton.setOnAction(e -> openInfoWindow());
-        header.getChildren().add(infoButton);
-/*
-        Button backStep   = new Button("<- ");
-        Button forwardStep = new Button("-> ");
-        Button playMode   = new Button("▶  ");
-        backStep.setStyle(
-                "-fx-background-color: rgba(14, 165, 233, 0.2);" +
-                        "-fx-background-radius: 30;" +
-                        "-fx-border-color: #0EA5E9;" +
-                        "-fx-border-width: 2;" +
-                        "-fx-border-radius: 30;" +
-                        "-fx-text-fill: white;" +
-                        "-fx-font-size: 14px;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-padding: 8 15;"
-        );
-        addButtonHoverEffect(backStep);
-        forwardStep.setStyle(
-                "-fx-background-color: rgba(14, 165, 233, 0.2);" +
-                        "-fx-background-radius: 30;" +
-                        "-fx-border-color: #0EA5E9;" +
-                        "-fx-border-width: 2;" +
-                        "-fx-border-radius: 30;" +
-                        "-fx-text-fill: white;" +
-                        "-fx-font-size: 14px;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-padding: 8 15;"
-        );
-        addButtonHoverEffect(forwardStep);
+        stepBackButton = new Button("Step Back");
+        stepForwardButton = new Button("Step Forward");
+        playModeButton = new Button("Play");
 
+        // Simulation buttons are now always visible and enabled
+        stepBackButton.setDisable(false);
+        stepForwardButton.setDisable(false);
+        playModeButton.setDisable(false);
 
-        header.getChildren().add(backStep);
-        header.getChildren().add(forwardStep);
-        */
+        header.getChildren().addAll(backButton, levelText, infoButton, stepBackButton, stepForwardButton, playModeButton);
+
+        setupSimulationControls(); // Set up handlers
 
         return header;
+    }
+
+    private void setupSimulationControls() {
+        stepBackButton.setOnAction(e -> {
+            System.out.println("[UI] Step Back button clicked");
+            GameReplay replay = (GameReplay) gameNode.getProperties().get("replay");
+            if (replay != null) {
+                replay.stepBackward();
+            } else {
+                System.out.println("[UI] No replay found in gameNode properties");
+            }
+        });
+
+        stepForwardButton.setOnAction(e -> {
+            System.out.println("[UI] Step Forward button clicked");
+            GameReplay replay = (GameReplay) gameNode.getProperties().get("replay");
+            if (replay != null) {
+                replay.stepForward();
+            } else {
+                System.out.println("[UI] No replay found in gameNode properties");
+            }
+        });
+
+        playModeButton.setOnAction(e -> {
+            System.out.println("[UI] Play Mode button clicked");
+            GameReplay replay = (GameReplay) gameNode.getProperties().get("replay");
+            if (replay != null) {
+                replay.switchToPlayMode();
+            } else {
+                System.out.println("[UI] No replay found in gameNode properties");
+            }
+        });
+    }
+
+
+
+
+
+
+
+    private Game getCurrentGame() {
+        EnvPresenter presenter = getPlayPresenter();
+        if (presenter == null) return null;
+        ToolEnvironment env = presenter.getEnvironment();
+        if (env instanceof Game) {
+            return (Game) env;
+        }
+        return null;
     }
 
     /**
@@ -573,7 +604,7 @@ public class GamePlayView {
 
         LevelManager.getInstance().markLevelCompleted(levelNumber, difficulty);
         levelAlreadyCompleted = true;
-        NodeStateManager.getInstance().clearNodeStates(levelNumber, difficulty);
+        //NodeStateManager.getInstance().clearNodeStates(levelNumber, difficulty);
 
         showLevelCompleteOverlay();
     }
@@ -650,7 +681,7 @@ public class GamePlayView {
             gameNodeCheckTimeline.stop();
             gameNodeCheckTimeline = null;
         }
-        SwingNode newGameNode = GameLevels.createGameLevel(levelNumber, difficulty, this::handleLevelCompleted);
+        SwingNode newGameNode = GameLevels.createGameLevel(levelNumber, difficulty, this::handleLevelCompleted, simulationMode);
         StackPane gameContainer = (StackPane) gameNode.getParent();
         gameContainer.getChildren().clear();
         gameContainer.getChildren().add(newGameNode);
@@ -671,7 +702,7 @@ public class GamePlayView {
             hideLevelCompleteOverlay();
         }
         LevelManager.getInstance().resetLevelCompletion(levelNumber, difficulty);
-        NodeStateManager.getInstance().clearNodeStates(levelNumber, difficulty);
+        //NodeStateManager.getInstance().clearNodeStates(levelNumber, difficulty);
         levelAlreadyCompleted = false;
         restartLevel();
         showTemporaryMessage("Level reset successfully!");
@@ -725,7 +756,7 @@ public class GamePlayView {
         this.backHandler = handler;
         EventHandler<ActionEvent> wrappedHandler = e -> {
             System.out.println("Back button clicked - saving state before exit");
-            saveStateOnExit();
+            //saveStateOnExit();
             if (infoStage != null) {
                 infoStage.close();
                 infoStage = null;
@@ -764,42 +795,13 @@ public class GamePlayView {
         return root;
     }
 
-    /** Uloží stavy Nodes */
-    public void saveStateOnExit() { try { System.out.println("saveStateOnExit called for level " + levelNumber + " at difficulty " + difficulty);
-        if (levelAlreadyCompleted) {
-            System.out.println("saveStateOnExit: Level " + levelNumber + " at difficulty " + difficulty +
-                    " is already completed, not saving state");
-            return;
-        }
-        boolean hasChanges = NodeStateManager.getInstance().hasChangesDetected(levelNumber, difficulty);
-        if (!hasChanges) {
-            System.out.println("No changes detected, not saving state");
-            return;
-        }
-        if (gameNode != null) {
-            EnvPresenter presenter = getPlayPresenter();
-            if (presenter != null) {
-                Object environment = presenter.getEnvironment();
-                if (environment instanceof Game) {
-                    Game game = (Game) environment;
-                    NodeStateManager.getInstance().saveNodeStates(levelNumber, difficulty, game);
-                }
-            }
-        }
-    } catch (Exception e) {
-        System.err.println("Error: saving game state: " + e.getMessage());
-        e.printStackTrace();
-    }
-    }
-
-
     /**
      * Cleans up resources used by this view.
      * This should be called when the view is no longer needed.
      */
     public void cleanup() {
         System.out.println("GamePlayView cleanup called");
-        saveStateOnExit();
+        //saveStateOnExit();
 
         if (gameBridge != null) {
             gameBridge.stopMonitoring();
@@ -822,12 +824,5 @@ public class GamePlayView {
         System.out.println("GamePlayView cleanup completed");
     }
 
-    /**
-     * Shows this game screen.
-     */
-    public void show() {
-        Scene scene = new Scene(root, 800, 600);
-        stage.setScene(scene);
-        stage.setTitle("VoltMaze - Level " + levelNumber);
-    }
+
 }

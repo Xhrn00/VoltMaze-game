@@ -20,24 +20,28 @@ import javafx.animation.PauseTransition;
 import javafx.embed.swing.SwingNode;
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import visualization.EnvPresenter;
+import visualization.common.ToolField;
 import visualization.view.InfoPresenter;
 
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.util.Map;
-import java.util.Random;
+import java.io.File;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -1051,7 +1055,7 @@ public class GameLevels {
      * @param levelCompletedCallback  Oznamení, ktere se vyvolá při dokončení úrovně
      * @return SwingNode,            Swingový panel s hrou
      */
-    public static SwingNode createGameLevel(int levelNumber, int difficulty, Runnable levelCompletedCallback) {
+    public static SwingNode createGameLevel(int levelNumber, int difficulty, Runnable levelCompletedCallback, boolean isSimulation) {
         SwingNode swingNode = new SwingNode();
 
         Object[][] levelDef = getLevelDefinition(levelNumber, difficulty);
@@ -1079,122 +1083,126 @@ public class GameLevels {
 
                 game.init();
 
-                // by init it takes solved game which shows for one second then scramble it
-                Game solvedGame = game.deepCopy();
+                if (isSimulation) {
+                    System.out.println("Simulation mode: Loading saved scrambled state directly");
 
-                // Check if it has saved states for this level and if the level is not completed
-                boolean hasSavedStates = false;
-                boolean isLevelCompleted = LevelManager.getInstance().isLevelCompleted(levelNumber, difficulty);
-                if (!isLevelCompleted) {
-                    NodeStateManager nodeStateManager = NodeStateManager.getInstance();
-                    hasSavedStates = nodeStateManager.hasSavedStates(levelNumber, difficulty);
-                }
+                    // Prevent logging during state load
+                    NodeStateManager.getInstance().setReplayMode(true);
 
-                // Final value save
-                final boolean finalHasSavedStates = hasSavedStates;
-                final boolean finalIsLevelCompleted = isLevelCompleted;
+                    NodeStateManager.getInstance().loadSimulationState(levelNumber, difficulty, game);
 
-                EnvPresenter solvedPr = new EnvPresenter(game);
-                solvedPr.init();
-                JPanel solvedPanel = solvedPr.getGamePanel();
-                Platform.runLater(() -> swingNode.setContent(solvedPanel));
-                Platform.runLater(() -> swingNode.getProperties().put("solvedGame", solvedGame));
+                    // Re-enable logging for replay after loading is done
+                    NodeStateManager.getInstance().setReplayMode(false);
 
-                Platform.runLater(() -> {
-                    PauseTransition pause = new PauseTransition(Duration.seconds(1));
-                    pause.setOnFinished(evt -> {
-                        SwingUtilities.invokeLater(() -> {
-                            // If itt have saved states and the level is not completed, load them
-                            if (finalHasSavedStates && !finalIsLevelCompleted) {
-                                System.out.println("Loading saved state for level " + levelNumber + " at difficulty " + difficulty);
-                                NodeStateManager.getInstance().loadNodeStates(levelNumber, difficulty, game);
-                                //NodeStateManager.getInstance().resetChangesDetected(levelNumber, difficulty);
-                            } else {
-                                // Else, scramble the level
-                                System.out.println("No saved state found or level completed " + levelNumber + " at difficulty " + difficulty);
-                                List<Position> posList = game.getNodes().stream()
-                                        .map(GameNode::getPosition).toList();
-                                Random rnd = new Random();
-                                int moves = 10 + difficulty * 5;
-                                do {
-                                    for (int i = 0; i < moves; i++) {
-                                        game.rotateNode(posList.get(rnd.nextInt(posList.size())));
-                                    }
-                                } while (game.anyBulbLit());
+                    // Load only user moves (not affected by replayMode)
+                    List<GameMove> savedMoves = NodeStateManager.getInstance().loadGameMoves(levelNumber, difficulty);
 
-                                for (GameNode node : game.getNodes()) {
-                                    node.resetRotationCount();
+                    // Now we go into replay mode to simulate user moves
+                    NodeStateManager.getInstance().setReplayMode(true); // TRUUUUUUUUUUUUUUE
+
+                    GameReplay replay = new GameReplay(savedMoves, game, () -> {
+                        NodeStateManager.getInstance().setReplayMode(false); // FAAAAAAAAAAAAAAAAAAAALSE
+                        game.init();
+                        Platform.runLater(() -> swingNode.setContent(new EnvPresenter(game).getGamePanel()));
+                    });
+
+
+                    swingNode.getProperties().put("replay", replay);
+
+
+                    EnvPresenter playPr = new EnvPresenter(game);
+                    if (levelCompletedCallback != null) {
+                        playPr.setLevelCompletedCallback(levelCompletedCallback);
+                    }
+                    playPr.init();
+                    JPanel playPanel = playPr.getGamePanel();
+
+                    Platform.runLater(() -> {
+                        swingNode.setUserData(playPr);
+                        swingNode.setContent(playPanel);
+
+                        swingNode.getProperties().put("game", game);
+                        swingNode.getProperties().put("levelNumber", levelNumber);
+                        swingNode.getProperties().put("difficulty", difficulty);
+
+                        setupTooltipWithRotationInfo(swingNode, game, game); // current game used as "solved" reference
+                    });
+
+                } else {
+                    System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                    Game solvedGame = game.deepCopy();
+
+                    EnvPresenter solvedPr = new EnvPresenter(game);
+                    solvedPr.init();
+                    JPanel solvedPanel = solvedPr.getGamePanel();
+                    Platform.runLater(() -> swingNode.setContent(solvedPanel));
+                    Platform.runLater(() -> swingNode.getProperties().put("solvedGame", solvedGame));
+
+
+                    Platform.runLater(() -> {
+                        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+                        pause.setOnFinished(evt -> SwingUtilities.invokeLater(() -> {
+
+                            List<Position> posList = game.getNodes().stream()
+                                    .map(GameNode::getPosition).toList();
+                            Random rnd = new Random();
+                            int moves = 10 + difficulty * 5;
+                            do {
+                                for (int i = 0; i < moves; i++) {
+                                    game.rotateNode(posList.get(rnd.nextInt(posList.size())));
                                 }
+                            } while (game.anyBulbLit());
+
+                            NodeStateManager.getInstance().saveInitialState(levelNumber, difficulty, game);
+
+                            for (GameNode node : game.getNodes()) {
+                                node.resetRotationCount();
                             }
+
+                            NodeStateManager.getInstance().startNewGameLog(levelNumber, difficulty);
+
 
                             EnvPresenter playPr = new EnvPresenter(game);
                             if (levelCompletedCallback != null) {
                                 final boolean[] initialCheckDone = {false};
-
                                 playPr.setLevelCompletedCallback(() -> {
                                     if (!initialCheckDone[0]) {
                                         initialCheckDone[0] = true;
                                         System.out.println("Skipping initial completion check");
                                         return;
                                     }
-
-                                    // if Completed level  - callBack
                                     levelCompletedCallback.run();
+                                });
+                            }
+                            for (GameNode node : game.getNodes()) {
+                                node.addObserver(observable -> {
+//                                    Position pos = node.getPosition();
+//                                    int rotation = node.getRotationCount();
+
+                                    // 🧠 Log move immediately
+                                    NodeStateManager.getInstance().savePlayerProgress(levelNumber, difficulty, game);
+                                    //System.out.println("LOG MOVE: " + pos.row + ", " + pos.col + ", " + rotation);
                                 });
                             }
                             playPr.init();
 
 
-                            for (GameNode node : game.getNodes()) {
-                                node.addObserver(observable -> {
-                                    NodeStateManager.getInstance().markLevelChanged(levelNumber, difficulty);
-                                    NodeStateManager.getInstance().saveNodeStates(levelNumber, difficulty, game);
-                                    System.out.println("Node changed in level " + levelNumber + " at difficulty " + difficulty);
-                                });
-                            }
                             JPanel playPanel = playPr.getGamePanel();
-                            swingNode.setContent(playPanel);
-
 
                             Platform.runLater(() -> {
                                 swingNode.setUserData(playPr);
-                                swingNode.setContent(playPr.getGamePanel());
                                 swingNode.setContent(playPanel);
 
                                 swingNode.getProperties().put("game", game);
                                 swingNode.getProperties().put("levelNumber", levelNumber);
                                 swingNode.getProperties().put("difficulty", difficulty);
 
-                                Tooltip tip = new Tooltip();
-                                tip.setShowDelay(Duration.seconds(1));
-                                Tooltip.install(swingNode, tip);
-                                final int cols = game.cols();
-                                final int rows = game.rows();
-
-                                swingNode.setOnMouseMoved(ev -> {
-                                    Bounds b = swingNode.getLayoutBounds();
-                                    double w = b.getWidth(), h = b.getHeight();
-                                    double cellW = w / cols, cellH = h / rows;
-
-                                    int col = Math.min(cols, Math.max(1, (int)(ev.getX()/cellW) + 1));
-                                    int row = Math.min(rows, Math.max(1, (int)(ev.getY()/cellH) + 1));
-
-                                    Set<Side> cur = game.getGameNode(row, col).getConnectors();
-                                    Set<Side> tgt = solvedGame.getGameNode(row, col).getConnectors();
-
-                                    int remaining = rotationsNeeded(cur, tgt);
-                                    int actual= game.getGameNode(row, col).getRotationCount();
-
-                                    tip.setText("GameNode " + row + "," + col +
-                                            "\n Need Rotations: " + remaining +
-                                            "\n Actual Rotations: " + actual);
-                                });
-                                swingNode.setOnMouseExited(ev -> tip.hide());
+                                setupTooltipWithRotationInfo(swingNode, game, solvedGame);
                             });
-                        });
+                        }));
+                        pause.play();
                     });
-                    pause.play();
-                });
+                }
 
             } catch (Exception e) {
                 System.err.println("ERROR during initialization: " + e.getMessage());
@@ -1204,6 +1212,39 @@ public class GameLevels {
 
         return swingNode;
     }
+
+
+    private static void setupTooltipWithRotationInfo(SwingNode swingNode, Game game, Game solvedGame) {
+        Tooltip tip = new Tooltip();
+        tip.setShowDelay(Duration.seconds(1));
+        Tooltip.install(swingNode, tip);
+
+        final int cols = game.cols();
+        final int rows = game.rows();
+
+        swingNode.setOnMouseMoved(ev -> {
+            Bounds b = swingNode.getLayoutBounds();
+            double w = b.getWidth(), h = b.getHeight();
+            double cellW = w / cols, cellH = h / rows;
+
+            int col = Math.min(cols, Math.max(1, (int) (ev.getX() / cellW) + 1));
+            int row = Math.min(rows, Math.max(1, (int) (ev.getY() / cellH) + 1));
+
+            Set<Side> cur = game.getGameNode(row, col).getConnectors();
+            Set<Side> tgt = solvedGame.getGameNode(row, col).getConnectors();
+
+            int remaining = rotationsNeeded(cur, tgt);
+            int actual = game.getGameNode(row, col).getRotationCount();
+
+            tip.setText("GameNode " + row + "," + col +
+                    "\n Need Rotations: " + remaining +
+                    "\n Actual Rotations: " + actual);
+        });
+
+        swingNode.setOnMouseExited(ev -> tip.hide());
+    }
+
+
 
     /**
      * Vrátí Side otočeny o 90°

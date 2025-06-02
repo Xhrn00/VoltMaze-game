@@ -26,8 +26,8 @@ import java.util.Objects;
  * pokud reprezentují stejnou pozici
  * (mají stejné souřadnice).*/
 public class Position {
-    private final int row;
-    private final int col;
+    public final int row;
+    public final int col;
 
     /**
      * Vytvoří novou instanci Position se zadaným řádkem a sloupcem.

@@ -31,6 +31,7 @@ import visualization.view.*;
 public class MainApp extends Application {
     private static final int CELL_SIZE =40 ;
     private Stage primaryStage;
+    private boolean simulationMode = false;
 
 
     /**
@@ -63,7 +64,7 @@ public class MainApp extends Application {
                 GamePlayView gameView = (GamePlayView) userData;
 
                 System.out.println("Saving game state before window close");
-                gameView.saveStateOnExit();
+                //gameView.saveStateOnExit();
             }
         }
         Platform.exit();
@@ -74,7 +75,7 @@ public class MainApp extends Application {
      */
     private void showMainMenu() {
 
-        saveCurrentGameState();
+        //saveCurrentGameState();
 
         GameMenuView menuView = new GameMenuView(primaryStage);
 
@@ -89,7 +90,7 @@ public class MainApp extends Application {
      * Zobrazí obrazovku výběru úrovní.
      */
     private void showLevels() {
-        saveCurrentGameState();
+        //saveCurrentGameState();
         LevelsView levelsView = new LevelsView(primaryStage);
         levelsView.setOnBackAction(e -> showMainMenu());
         levelsView.setOnLevelSelectAction(e -> {
@@ -97,8 +98,10 @@ public class MainApp extends Application {
             int levelNumber = (int) button.getProperties().get("levelNumber");
             int difficulty = (int) button.getProperties().get("difficulty");
 
-            startGame(levelNumber, difficulty);
+            boolean simulationMode = levelsView.isSimulationModeEnabled(); // ✅ Get it from LevelsView
+            startGame(levelNumber, difficulty, simulationMode); // ✅ Pass it
         });
+
 
         Scene scene = new Scene(levelsView.getRoot(), 800, 600);
         primaryStage.setScene(scene);
@@ -108,26 +111,11 @@ public class MainApp extends Application {
      * Zobrazí informační stránku o hře.
      */
     private void showInfo() {
-        saveCurrentGameState();
+        //saveCurrentGameState();
         InfoView infoView = new InfoView(primaryStage);
         infoView.setOnBackAction(e -> showMainMenu());
         Scene scene = new Scene(infoView.getRoot(), 800, 600);
         primaryStage.setScene(scene);
-    }
-
-    /**
-     * Helper method to save the current game state if we're in a game view
-     */
-    private void saveCurrentGameState() {
-        if (primaryStage != null && primaryStage.getScene() != null &&
-                primaryStage.getScene().getRoot() != null) {
-            Object userData = primaryStage.getScene().getRoot().getUserData();
-            if (userData instanceof GamePlayView) {
-                GamePlayView gameView = (GamePlayView) userData;
-                System.out.println("Saving game state before navigation");
-                gameView.saveStateOnExit();
-            }
-        }
     }
 
     /**
@@ -142,7 +130,7 @@ public class MainApp extends Application {
 
         LevelManager.getInstance().markLevelCompleted(levelNumber, difficulty);
 
-        NodeStateManager.getInstance().clearNodeStates(levelNumber, difficulty);
+        //NodeStateManager.getInstance().clearNodeStates(levelNumber, difficulty);
 
         int nextLevel = levelNumber + 1;
 
@@ -170,17 +158,20 @@ public class MainApp extends Application {
         }));
     }
 
+
+
     /**
      * Spustí herní obrazovku pro zvolenou úroveň a obtížnost.
      *
      * @param levelNumber číslo úrovně
      * @param difficulty  úroveň obtížnosti
      */
-    private void startGame(int levelNumber, int difficulty) {
-        System.out.println("Starting game with level: " + levelNumber + ", difficulty: " + difficulty);
+    private void startGame(int levelNumber, int difficulty, boolean simulationMode) {
+        System.out.println("Starting game with level: " + levelNumber + ", difficulty: " + difficulty + ", sim: " + simulationMode);
+        //NodeStateManager.getInstance().startNewGameLog(levelNumber, difficulty);
 
         try {
-            GamePlayView gamePlayView = new GamePlayView(primaryStage, levelNumber, difficulty);
+            GamePlayView gamePlayView = new GamePlayView(primaryStage, levelNumber, difficulty, simulationMode); // ✅ works now
 
             gamePlayView.setOnBackAction(e -> {
                 System.out.println("Back button clicked in game view");
@@ -188,7 +179,6 @@ public class MainApp extends Application {
             });
 
             gamePlayView.setOnNextLevelAction(e -> handleLevelCompleted(levelNumber, difficulty));
-
             gamePlayView.setOnLevelCompleted(() -> handleLevelCompleted(levelNumber, difficulty));
 
             Scene scene = new Scene(gamePlayView.getRoot());
@@ -202,13 +192,11 @@ public class MainApp extends Application {
         }
     }
 
-    /**
-     * Vrátí se zpět do výběru úrovní.
-     */
-    private void returnToLevels() {
-        saveCurrentGameState();
-        showLevels();;
+    private void startGame(int levelNumber, int difficulty) {
+        startGame(levelNumber, difficulty, false); // default to normal mode
     }
+
+
 
     @Override
     public void stop() {
@@ -219,7 +207,7 @@ public class MainApp extends Application {
             if (userData instanceof GamePlayView) {
                 System.out.println("Cleaning up GamePlayView...");
                 GamePlayView gameView = (GamePlayView) userData;
-                gameView.saveStateOnExit();
+                //gameView.saveStateOnExit();
                 gameView.cleanup();
             }
         }

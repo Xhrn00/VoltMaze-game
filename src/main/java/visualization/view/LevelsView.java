@@ -23,6 +23,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -35,24 +36,28 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import visualization.common.SimulationState;
 
 /** Zobrazuje výběr úrovní hry rozdělený dle obtížností.
  *  Nabízí přepínání mezi třemi obtížnostmi (Beginner, Intermediate, Advanced),
  *  vykresluje mřížku tlačítek s čísly úrovní, umožňuje návrat zpět
  *  a reset ukládaného postupu.*/
-public class LevelsView {
+    public class LevelsView {
 
-    private final StackPane root;
-    private final Stage stage;
-    private Button backButton;
-    private Button easyButton;
-    private Button mediumButton;
-    private Button hardButton;
-    private final VBox contentContainer;
-    private final VBox levelsContainer;
-    private int currentDifficulty = 0; // 0 = easy, 1 = medium, 2 = hard
-    private EventHandler<ActionEvent> levelSelectHandler;
-    private final LevelManager levelManager = LevelManager.getInstance();
+        private final StackPane root;
+        private final Stage stage;
+        private Button backButton;
+        private Button easyButton;
+        private Button mediumButton;
+        private Button hardButton;
+        private final VBox contentContainer;
+        private final VBox levelsContainer;
+        private int currentDifficulty = 0; // 0 = easy, 1 = medium, 2 = hard
+        private EventHandler<ActionEvent> levelSelectHandler;
+        private final LevelManager levelManager = LevelManager.getInstance();
+        private ToggleButton simulationToggle;
+        private static boolean isSimulationModeActive = false;
+
 
     /**
      * Vytvoří novou instanci LevelsView pro zadané JavaFX {@code stage}.
@@ -211,49 +216,89 @@ public class LevelsView {
      *
      * @return Pane obsahující nadpis a tlačítko zpět
      */
-    private Pane createHeader() {
-        StackPane headerContainer = new StackPane();
-        headerContainer.setPadding(new Insets(0, 0, 20, 0));
+        private Pane createHeader() {
+            StackPane headerContainer = new StackPane();
+            headerContainer.setPadding(new Insets(0, 0, 20, 0));
 
-        Text levelsTitle = new Text("Select Level");
-        levelsTitle.setFont(Font.font("System", FontWeight.BOLD, 36));
-        levelsTitle.setFill(Color.web("#7DD3FC"));
+            Text levelsTitle = new Text("Select Level");
+            levelsTitle.setFont(Font.font("System", FontWeight.BOLD, 36));
+            levelsTitle.setFill(Color.web("#7DD3FC"));
 
-        DropShadow titleGlow = new DropShadow();
-        titleGlow.setColor(Color.web("#0EA5E9"));
-        titleGlow.setRadius(10);
-        titleGlow.setSpread(0.2);
-        levelsTitle.setEffect(titleGlow);
+            DropShadow titleGlow = new DropShadow();
+            titleGlow.setColor(Color.web("#0EA5E9"));
+            titleGlow.setRadius(10);
+            titleGlow.setSpread(0.2);
+            levelsTitle.setEffect(titleGlow);
 
-        backButton = new Button("←  Back");
-        backButton.setStyle(
-                "-fx-background-color: rgba(14, 165, 233, 0.2);" +
-                        "-fx-background-radius: 30;" +
-                        "-fx-border-color: #0EA5E9;" +
-                        "-fx-border-width: 2;" +
-                        "-fx-border-radius: 30;" +
-                        "-fx-text-fill: white;" +
-                        "-fx-font-size: 16px;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-padding: 8 20;"
-        );
+            backButton = new Button("←  Back");
+            backButton.setStyle(
+                    "-fx-background-color: rgba(14, 165, 233, 0.2);" +
+                            "-fx-background-radius: 30;" +
+                            "-fx-border-color: #0EA5E9;" +
+                            "-fx-border-width: 2;" +
+                            "-fx-border-radius: 30;" +
+                            "-fx-text-fill: white;" +
+                            "-fx-font-size: 16px;" +
+                            "-fx-font-weight: bold;" +
+                            "-fx-padding: 8 20;"
+            );
 
-        DropShadow shadow = new DropShadow();
-        shadow.setColor(Color.web("#0EA5E9"));
-        shadow.setRadius(10);
-        shadow.setSpread(0);
-        backButton.setEffect(shadow);
+            simulationToggle = new ToggleButton();
+            updateSimulationToggleText(); // Устанавливаем начальный текст
 
-        addButtonHoverEffect(backButton);
+            simulationToggle.setStyle(
+                    "-fx-background-color: rgba(14, 165, 233, 0.2);" +
+                            "-fx-background-radius: 20;" +
+                            "-fx-border-color: #0EA5E9;" +
+                            "-fx-border-width: 2;" +
+                            "-fx-border-radius: 20;" +
+                            "-fx-text-fill: white;" +
+                            "-fx-font-size: 12px;" +
+                            "-fx-font-weight: bold;" +
+                            "-fx-padding: 6 12;"
+            );
 
-        headerContainer.getChildren().add(levelsTitle);
-        StackPane.setAlignment(levelsTitle, Pos.CENTER);
+            simulationToggle.setSelected(SimulationState.isSimulationMode()); // Восстанавливаем состояние
+            simulationToggle.setPickOnBounds(true);
+            simulationToggle.setFocusTraversable(false);
 
-        headerContainer.getChildren().add(backButton);
-        StackPane.setAlignment(backButton, Pos.CENTER_LEFT);
+            simulationToggle.setOnAction(e -> {
+                SimulationState.setSimulationMode(simulationToggle.isSelected());
+                updateSimulationToggleText();
+            });
 
-        return headerContainer;
-    }
+            headerContainer.getChildren().add(simulationToggle);
+            StackPane.setAlignment(simulationToggle, Pos.CENTER_RIGHT);
+
+            DropShadow shadow = new DropShadow();
+            shadow.setColor(Color.web("#0EA5E9"));
+            shadow.setRadius(10);
+            shadow.setSpread(0);
+            backButton.setEffect(shadow);
+
+            addButtonHoverEffect(backButton);
+
+            headerContainer.getChildren().add(levelsTitle);
+            StackPane.setAlignment(levelsTitle, Pos.CENTER);
+
+            headerContainer.getChildren().add(backButton);
+            StackPane.setAlignment(backButton, Pos.CENTER_LEFT);
+
+            return headerContainer;
+        }
+
+        public boolean isSimulationModeEnabled() {
+            return simulationToggle != null && simulationToggle.isSelected();
+        }
+
+        private void updateSimulationToggleText() {
+            simulationToggle.setText(
+                    SimulationState.isSimulationMode()
+                            ? "Exit Simulation Mode"
+                            : "Simulation Mode"
+            );
+        }
+
 
     /**
      * Vytvoří komponentu pro výběr obtížnosti hry s tlačítky Beginner, Intermediate a Advanced.

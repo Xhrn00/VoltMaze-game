@@ -16,6 +16,7 @@
 package ija.ijaProject.common;
 
 import ija.ijaProject.game.Game;
+import ija.ijaProject.game.levels.NodeStateManager;
 import visualization.common.AbstractObservableField;
 import visualization.common.ToolField;
 import java.util.HashSet;
@@ -107,12 +108,19 @@ public class GameNode extends AbstractObservableField implements ToolField {
         }
         connectors.clear();
         connectors.addAll(newConnectors);
-        notifyObservers();
+        //notifyObservers();
         rotationCount++;
+        Position pos = this.getPosition();
+        if (!NodeStateManager.getInstance().isReplayMode()) {
+            NodeStateManager.getInstance().logMove(pos.row(), pos.col(), 1);
+        }
+        notifyObservers();
 
         if (game != null) {
             game.init();
         }
+
+        //NodeStateManager.getInstance().logMove(position.col(), position.row(), rotationCount % 4);
     }
 
     /**
