@@ -13,16 +13,13 @@
 
 package ija.ijaProject;
 
-import ija.ijaProject.game.Game;
 import ija.ijaProject.game.levels.LevelManager;
-import ija.ijaProject.game.levels.NodeStateManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import visualization.EnvPresenter;
 import visualization.view.*;
 
 /** Hlavní třída aplikace VoltMaze.
@@ -64,7 +61,6 @@ public class MainApp extends Application {
                 GamePlayView gameView = (GamePlayView) userData;
 
                 System.out.println("Saving game state before window close");
-                //gameView.saveStateOnExit();
             }
         }
         Platform.exit();
@@ -74,9 +70,6 @@ public class MainApp extends Application {
      * Zobrazí úvodní hlavní menu s tlačítky Play, Info a Settings.
      */
     private void showMainMenu() {
-
-        //saveCurrentGameState();
-
         GameMenuView menuView = new GameMenuView(primaryStage);
 
         menuView.setOnPlayAction(e -> showLevels());
@@ -90,7 +83,6 @@ public class MainApp extends Application {
      * Zobrazí obrazovku výběru úrovní.
      */
     private void showLevels() {
-        //saveCurrentGameState();
         LevelsView levelsView = new LevelsView(primaryStage);
         levelsView.setOnBackAction(e -> showMainMenu());
         levelsView.setOnLevelSelectAction(e -> {
@@ -111,7 +103,6 @@ public class MainApp extends Application {
      * Zobrazí informační stránku o hře.
      */
     private void showInfo() {
-        //saveCurrentGameState();
         InfoView infoView = new InfoView(primaryStage);
         infoView.setOnBackAction(e -> showMainMenu());
         Scene scene = new Scene(infoView.getRoot(), 800, 600);
@@ -126,11 +117,7 @@ public class MainApp extends Application {
      */
     private void handleLevelCompleted(int levelNumber, int difficulty) {
         System.out.println("MainApp: Level " + levelNumber + " at difficulty " + difficulty + " completed!");
-
-
         LevelManager.getInstance().markLevelCompleted(levelNumber, difficulty);
-
-        //NodeStateManager.getInstance().clearNodeStates(levelNumber, difficulty);
 
         int nextLevel = levelNumber + 1;
 
@@ -168,7 +155,6 @@ public class MainApp extends Application {
      */
     private void startGame(int levelNumber, int difficulty, boolean simulationMode) {
         System.out.println("Starting game with level: " + levelNumber + ", difficulty: " + difficulty + ", sim: " + simulationMode);
-        //NodeStateManager.getInstance().startNewGameLog(levelNumber, difficulty);
 
         try {
             GamePlayView gamePlayView = new GamePlayView(primaryStage, levelNumber, difficulty, simulationMode);
@@ -192,8 +178,16 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Spustí hru na zadané úrovni a obtížnosti.
+     * Tato metoda volá rozšířenou verzi metody {@code startGame}, kde je přednastaveno,
+     * že se nejedná o opakované spuštění hry.
+     *
+     * @param levelNumber číslo úrovně, která se má spustit
+     * @param difficulty obtížnost hry (např. 1 = snadná, 2 = střední, 3 = těžká)
+     */
     private void startGame(int levelNumber, int difficulty) {
-        startGame(levelNumber, difficulty, false); // default to normal mode
+        startGame(levelNumber, difficulty, false);
     }
 
 
@@ -207,7 +201,6 @@ public class MainApp extends Application {
             if (userData instanceof GamePlayView) {
                 System.out.println("Cleaning up GamePlayView...");
                 GamePlayView gameView = (GamePlayView) userData;
-                //gameView.saveStateOnExit();
                 gameView.cleanup();
             }
         }

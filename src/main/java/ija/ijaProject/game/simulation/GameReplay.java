@@ -1,13 +1,18 @@
-package ija.ijaProject.game.levels;
+package ija.ijaProject.game.simulation;
 
 import ija.ijaProject.common.GameNode;
 import ija.ijaProject.game.Game;
-import visualization.EnvPresenter;
-import visualization.common.ToolEnvironment;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Třída {@code GameReplay} slouží k přehrávání záznamu tahů ve hře.
+ * Umožňuje krokování vpřed a zpět v rámci záznamu hry a přepnutí do režimu "přehrávání".
+ *
+ * Uchovává seznam tahů, aktuální pozici v záznamu a zajišťuje aktualizaci zobrazení hry
+ * pomocí poskytnutého callbacku.
+ */
 public class GameReplay {
     private final List<GameMove> moves;
     private int currentMoveIndex = -1;
@@ -15,6 +20,13 @@ public class GameReplay {
     private final Runnable refreshCallback;
     private final Game game;
 
+    /**
+     * Vytvoří novou instanci {@code GameReplay} s daným seznamem tahů, hrou a callbackem.
+     *
+     * @param moves seznam tahů k přehrání
+     * @param game instance hry, ve které se přehrávání vykonává
+     * @param refreshCallback funkce, která se zavolá po každé změně (např. pro překreslení UI)
+     */
     public GameReplay(List<GameMove> moves, Game game, Runnable refreshCallback) {
         this.moves = moves;
         this.game = game;
@@ -22,6 +34,10 @@ public class GameReplay {
         System.out.println("[Replay] Created with " + moves.size() + " moves.");
     }
 
+    /**
+     * Posune přehrávání o jeden tah dopředu a aplikuje příslušný tah na herní stav.
+     * Pokud je přehrávač v režimu "play" nebo je na konci záznamu, akce se neprovede.
+     */
     public void stepForward() {
         System.out.println("[Replay] stepForward called. isPlayMode=" + isPlayMode + ", currentMoveIndex=" + currentMoveIndex);
         if (isPlayMode || currentMoveIndex >= moves.size() - 1) {
@@ -34,6 +50,10 @@ public class GameReplay {
         refreshCallback.run();
     }
 
+    /**
+     * Vrátí se o jeden tah zpět a zruší účinek příslušného tahu ve hře.
+     * Pokud je přehrávač v režimu "play" nebo je na začátku záznamu, akce se neprovede.
+     */
     public void stepBackward() {
         System.out.println("[Replay] stepBackward called. isPlayMode=" + isPlayMode + ", currentMoveIndex=" + currentMoveIndex);
         if (isPlayMode || currentMoveIndex < 0) {
@@ -46,6 +66,10 @@ public class GameReplay {
         refreshCallback.run();
     }
 
+    /**
+     * Přepne režim z přehrávání zpět na normální herní režim.
+     * Používá zkrácený záznam tahů až po aktuální krok a inicializuje hru do tohoto stavu.
+     */
     public void switchToPlayMode() {
         System.out.println("[Replay] Switching to play mode.");
         System.out.println("!!!! NODE: " + NodeStateManager.getInstance().isReplayMode());
@@ -60,6 +84,11 @@ public class GameReplay {
 
     }
 
+    /**
+     * Aplikuje daný tah na aktuální stav hry — otáčí příslušným uzlem podle rotace.
+     *
+     * @param move tah, který má být aplikován
+     */
     private void applyMove(GameMove move) {
         System.out.println("[Replay] Applying move: (" + move.x + ", " + move.y + ")");
         GameNode node = game.getGameNode(move.x, move.y);
@@ -72,6 +101,11 @@ public class GameReplay {
         }
     }
 
+    /**
+     * Vrátí zpět daný tah v herním stavu — simuluje zpětnou rotaci.
+     *
+     * @param move tah, který má být vrácen zpět
+     */
     private void revertMove(GameMove move) {
         System.out.println("[Replay] Reverting move: (" + move.x + ", " + move.y + ")");
         GameNode node = game.getGameNode(move.x, move.y);

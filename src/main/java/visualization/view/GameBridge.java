@@ -70,7 +70,7 @@ public class GameBridge {
                     completionTimer.cancel();
                 }
             }
-        }, 1000, 1000); // Check every second
+        }, 1000, 1000);
     }
 
     /**
@@ -96,7 +96,6 @@ public class GameBridge {
             for (int col = 1; col <= game.cols(); col++) {
                 ToolField field = game.fieldAt(row, col);
 
-                // Check if there's a bulb at this position and if it's not lit
                 if (field != null && field.isBulb() && !field.light()) {
                     return false;
                 }

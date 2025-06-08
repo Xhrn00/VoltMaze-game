@@ -30,7 +30,9 @@ import javax.swing.BorderFactory;
 import javax.swing.Timer;
 
 /**
- * EnvPresenter handles the visualization of the game environment and detects level completion.
+ * Třída zajišťuje zobrazení herního prostředí pomocí Swing komponent.
+ * Vytváří vizuální mřížku podle prostředí ToolEnvironment a zajišťuje správu kliknutí, režimu přehrávání
+ * a kontrolu dokončení úrovně.
  */
 public class EnvPresenter {
     public static final int CELL_SIZE = 40;
@@ -47,15 +49,14 @@ public class EnvPresenter {
 
 
     /**
-     * Creates a new EnvPresenter for the given environment.
+     * Konstruktor inicializuje prezentér pro dané herní prostředí.
      *
-     * @param env The game environment to visualize
+     * @param env herní prostředí, které má být vizualizováno
      */
     public EnvPresenter(ToolEnvironment env) {
         this.env = env;
 
         this.fields = new ArrayList<>();
-       // initialize();
         levelCheckTimer = new Timer(200, e -> checkLevelCompletion());
     }
 
@@ -65,20 +66,23 @@ public class EnvPresenter {
         SwingUtilities.invokeLater(() -> {
             initialize();
             levelCheckTimer.start();
-            /*if (inReplayMode) {
-                disableUserClicks();
-            }*/
         });
     }
+
+    /**
+     * Nastaví, zda je aktivní režim přehrávání (replay).
+     *
+     * @param replay {@code true}, pokud má být aktivní režim přehrávání
+     */
     public void setReplayMode(boolean replay) {
         this.inReplayMode = replay;
     }
 
-        /**
-         * Gets the main game panel for embedding in JavaFX.
-         *
-         * @return The JPanel containing the game grid
-         */
+    /**
+     * Vrací hlavní panel s herní mřížkou.
+     *
+     * @return hlavní JPanel s obsahem hry
+     */
     public JPanel getGamePanel() {
         return mainPanel;
     }
@@ -99,19 +103,18 @@ public class EnvPresenter {
     }
 
     /**
-     * Initializes the game UI without showing it.
-     * Used when embedding the game in JavaFX.
+     * Inicializuje zobrazení a spustí časovač pro kontrolu dokončení úrovně.
      */
     public void init() {
         SwingUtilities.invokeLater(() -> {
             this.initialize();
             levelCheckTimer.start();
-            /*if (inReplayMode) {
-                disableUserClicks();
-            }*/
         });
     }
 
+    /**
+     * Zakáže uživatelská kliknutí ve všech polích mřížky.
+     */
     public void disableUserClicks() {
         System.out.println("[EnvPresenter] disableUserClicks() called; fieldsCount = " + fields.size());
         clicksEnabled = false;
@@ -120,15 +123,16 @@ public class EnvPresenter {
                 JPanel maybeGrid = (JPanel) comp;
                 for (Component inner : maybeGrid.getComponents()) {
                     if (inner instanceof FieldView) {
-                        //System.out.println("  → disabling clicks on FieldView[" + i + "] = " + fields.get(i));
                         ((FieldView) inner).disableClicks();
-                        //System.out.println("disabled clicks in Env,instance: " + inner);
                     }
                 }
             }
         }
     }
 
+    /**
+     * Povolení uživatelských kliknutí ve všech polích mřížky.
+     */
     public void enableUserClicks() {
         this.clicksEnabled = true;
         for (Component comp : mainPanel.getComponents()) {
@@ -137,13 +141,15 @@ public class EnvPresenter {
                 for (Component inner : maybeGrid.getComponents()) {
                     if (inner instanceof FieldView) {
                         ((FieldView) inner).enableClicks();
-                        //System.out.println("enabled clicks in Env,instance: " + inner);
                     }
                 }
             }
         }
     }
 
+    /**
+     * Obnoví zobrazení všech polí v mřížce.
+     */
     public void refreshViews() {
         for (Component comp : mainPanel.getComponents()) {
             if (comp instanceof JPanel) {
@@ -151,7 +157,6 @@ public class EnvPresenter {
                 for (Component inner : maybeGrid.getComponents()) {
                     if (inner instanceof FieldView) {
                         ((FieldView) inner).repaint();
-                        //System.out.println("enabled clicks in Env,instance: " + inner);
                     }
                 }
             }
@@ -167,9 +172,9 @@ public class EnvPresenter {
     }
 
     /**
-     * Checks if all bulbs in the game are lit, indicating level completion.
+     * Zkontroluje, zda je úroveň dokončena.
      *
-     * @return true if all bulbs are lit, false otherwise
+     * @return {@code true}, pokud jsou všechny žárovky rozsvíceny
      */
     private boolean isLevelCompleted() {
         boolean hasBulbs = false;
@@ -194,7 +199,8 @@ public class EnvPresenter {
     }
 
     /**
-     * Checks if the level is completed and triggers the callback if needed.
+     * Spouští pravidelnou kontrolu dokončení úrovně.
+     * Pokud je úroveň dokončena, zastaví se časovač a spustí se příslušné callback.
      */
     private void checkLevelCompletion() {
         if (!levelCompletionDetected && isLevelCompleted()) {
@@ -207,7 +213,8 @@ public class EnvPresenter {
     }
 
     /**
-     * Initializes the game UI components.
+     * Inicializuje a vykreslí herní mřížku a komponenty v novém okně.
+     * Pokud je aktivní replay mód, zakáže kliknutí.
      */
     private void initialize() {
         System.out.println("[EnvPresenter] initialize() START; fields was: " + fields.size());
@@ -288,30 +295,27 @@ public class EnvPresenter {
         }
     }
 
-    /** Return the environment */
+    /**
+     * Vrací referenci na aktuální herní prostředí.
+     *
+     * @return instance {@code ToolEnvironment}
+     */
     public ToolEnvironment getEnvironment() {
         return env;
     }
 
+    /**
+     * Vrací, zda je aktivní režim přehrávání.
+     *
+     * @return {@code true}, pokud je aktivní replay mód
+     */
     public boolean inReplayMode() {
         return inReplayMode;
     }
-    public boolean isInReplayMode() {
-        return inReplayMode;
-    }
 
-    /** Возвращает количество созданных FieldView. */
-    public int getFieldsCount() {
-        return fields.size();
-    }
-
-    /** Возвращает текущее состояние clicksEnabled у первого поля (или -1, если полей нет). */
-    public boolean isFirstFieldClickable() {
-        if (fields.isEmpty()) return false;
-        return fields.get(0).isClicksEnabled();
-    }
-
-    /** Для отладки: печатает краткую информацию о состоянии Presenter. */
+    /**
+     * Pomocná metoda pro výpis aktuálního stavu instance do konzole (pro ladění).
+     */
     public void debugPrintState() {
         System.out.println("[EnvPresenter] this=" + this
                 + ", inReplayMode=" + inReplayMode

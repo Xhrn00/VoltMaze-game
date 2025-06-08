@@ -76,7 +76,6 @@ public class FieldView extends JPanel implements Observable.Observer {
     }
     public void disableClicks() {
         this.clicksEnabled = false;
-        //System.out.println("disabled clicks in FieldView");
     }
 
     public void enableClicks() {
@@ -110,7 +109,6 @@ public class FieldView extends JPanel implements Observable.Observer {
      */
     @Override
     public void update(Observable observable) {
-        // Increment update count when field changes
         updateCount++;
         repaint();
     }
@@ -361,14 +359,4 @@ public class FieldView extends JPanel implements Observable.Observer {
 
         g2d.setPaint(baseColor);
     }
-
-    /*private void drawDirLines(Graphics2D g2d, int cx, int cy, int w, int h) {
-        if (field.north()) g2d.draw(new Line2D.Float(cx, cy, cx, 0));
-        if (field.south()) g2d.draw(new Line2D.Float(cx, cy, cx, h));
-        if (field.east()) g2d.draw(new Line2D.Float(cx, cy, w, cy));
-        if (field.west()) g2d.draw(new Line2D.Float(cx, cy, 0, cy));
-    }
-    public ToolField getField() {
-        return field;
-    }*/
 }

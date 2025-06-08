@@ -12,16 +12,14 @@
 package visualization.view;
 
 import ija.ijaProject.common.GameNode;
-import ija.ijaProject.game.levels.GameMove;
-import ija.ijaProject.common.Side;
 import ija.ijaProject.game.levels.*;
 import ija.ijaProject.game.Game;
+import ija.ijaProject.game.simulation.GameReplay;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.application.Platform;
-import javafx.collections.MapChangeListener;
 import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,7 +28,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Glow;
 import javafx.scene.layout.*;
@@ -45,17 +42,10 @@ import javafx.util.Duration;
 import visualization.EnvPresenter;
 import visualization.common.ToolEnvironment;
 import javafx.scene.control.Label;
-import javafx.collections.ObservableMap;
-import javafx.collections.MapChangeListener;
-
 
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
-
-import java.util.Set;
-import java.util.stream.Collectors;
 
 
 /**
@@ -316,37 +306,41 @@ public class GamePlayView {
 
         header.getChildren().addAll(backButton, levelText, infoButton, stepBackButton, stepForwardButton, playModeButton);
 
-        //setupButtonsOnStart();
-        //setupSimulationControls();
-
         return header;
     }
-    private void setupButtonsOnStart() {
-        Platform.runLater(() -> {Object rep = gameNode.getProperties().get("replay");
-            boolean hasReplay = (rep instanceof GameReplay);
+//    private void setupButtonsOnStart() {
+//        Platform.runLater(() -> {Object rep = gameNode.getProperties().get("replay");
+//            boolean hasReplay = (rep instanceof GameReplay);
+//
+//            stepBackButton.setVisible(hasReplay);
+//            stepForwardButton.setVisible(hasReplay);
+//            stepBackButton.setDisable(!hasReplay);
+//            stepForwardButton.setDisable(!hasReplay);
+//
+//            playModeButton.setVisible(hasReplay);
+//            playModeButton.setDisable(!hasReplay);});
+//
+//    }
+//    public void updateSimulationButtons() {
+//        Object rep = gameNode.getProperties().get("replay");
+//        boolean hasReplay = (rep instanceof GameReplay);
+//
+//        stepBackButton.setVisible(hasReplay);
+//        stepForwardButton.setVisible(hasReplay);
+//        playModeButton.setVisible(hasReplay);
+//
+//        stepBackButton.setDisable(!hasReplay);
+//        stepForwardButton.setDisable(!hasReplay);
+//        playModeButton.setDisable(!hasReplay);
+//    }
 
-            stepBackButton.setVisible(hasReplay);
-            stepForwardButton.setVisible(hasReplay);
-            stepBackButton.setDisable(!hasReplay);
-            stepForwardButton.setDisable(!hasReplay);
-
-            playModeButton.setVisible(hasReplay);
-            playModeButton.setDisable(!hasReplay);});
-
-    }
-    public void updateSimulationButtons() {
-        Object rep = gameNode.getProperties().get("replay");
-        boolean hasReplay = (rep instanceof GameReplay);
-
-        stepBackButton.setVisible(hasReplay);
-        stepForwardButton.setVisible(hasReplay);
-        playModeButton.setVisible(hasReplay);
-
-        stepBackButton.setDisable(!hasReplay);
-        stepForwardButton.setDisable(!hasReplay);
-        playModeButton.setDisable(!hasReplay);
-    }
-
+    /**
+     * Inicializuje ovládací prvky pro simulaci (kroky zpět, vpřed, přepnutí do režimu hry).
+     *
+     * Tato metoda kontroluje, zda je ve vlastnostech uzlu k dispozici objekt {@code GameReplay},
+     * a podle toho zobrazuje a aktivuje příslušná tlačítka.
+     * Nastavuje také akce pro tlačítka krokování a návrat do režimu hry.
+     */
     private void setupSimulationControls() {
         Platform.runLater(() -> {Object rep = gameNode.getProperties().get("replay");
             boolean hasReplay = (rep instanceof GameReplay);

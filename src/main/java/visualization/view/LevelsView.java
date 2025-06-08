@@ -36,7 +36,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import visualization.common.SimulationState;
+import ija.ijaProject.game.simulation.SimulationState;
 
 /** Zobrazuje výběr úrovní hry rozdělený dle obtížností.*/
     public class LevelsView {

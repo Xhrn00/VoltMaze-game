@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3415dae3-3af7-4ac4-b254-674626e3238a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/level_progress.dat" beforeDir="false" afterPath="$PROJECT_DIR$/level_progress.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ija/ijaProject/game/levels/GameLevels.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ija/ijaProject/game/levels/GameLevels.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ija/ijaProject/game/levels/GameReplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ija/ijaProject/game/levels/GameReplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ija/ijaProject/game/levels/NodeStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ija/ijaProject/game/levels/NodeStateManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/VoltMaze-1.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/levels/GameLevels$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/levels/GameLevels$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/levels/GameLevels.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/levels/GameLevels.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/levels/GameReplay.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/levels/GameReplay.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/levels/NodeStateManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ija/ijaProject/game/levels/NodeStateManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/visualization/view/FieldView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/visualization/view/FieldView$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/visualization/view/GamePlayView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/visualization/view/GamePlayView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/visualization/view/InfoPresenter$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/visualization/view/InfoPresenter$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/visualization/view/InfoPresenter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/visualization/view/InfoPresenter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/javadoc-bundle-options/javadoc-options-javadoc-resources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-javadoc-plugin-stale-data.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/allclasses-index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/allpackages-index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/constant-values.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/element-list" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/help-doc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/MainApp.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/class-use/MainApp.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/common/GameNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/common/Position.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/common/Side.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/common/class-use/GameNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/common/class-use/Position.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/common/class-use/Side.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/common/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/common/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/common/package-use.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/Game.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/class-use/Game.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/GameLevels.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/GameMove.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/GameReplay.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/LevelManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/NodeState.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/NodeStateManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/class-use/GameLevels.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/class-use/GameMove.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/class-use/GameReplay.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/class-use/LevelManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/class-use/NodeState.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/class-use/NodeStateManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/levels/package-use.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/game/package-use.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/ija/ijaProject/package-use.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/index-all.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/legal/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/legal/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/legal/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/legal/dejavufonts.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/legal/jquery.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/legal/jqueryUI.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/member-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/module-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/overview-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/overview-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/package-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/copy.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSans-Bold.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSans-Bold.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSans-BoldOblique.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSans-BoldOblique.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSans-Oblique.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSans-Oblique.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSans.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSans.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSansMono-Bold.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSansMono-Bold.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSansMono-BoldOblique.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSansMono-BoldOblique.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSansMono-Oblique.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSansMono-Oblique.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSansMono.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSansMono.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSerif-Bold.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSerif-Bold.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSerif-BoldItalic.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSerif-BoldItalic.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSerif-Italic.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSerif-Italic.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSerif.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/DejaVuLGCSerif.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/fonts/dejavu.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/glass.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/jquery-ui.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/link.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/stylesheet.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/resource-files/x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/script-files/jquery-3.7.1.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/script-files/jquery-ui.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/script-files/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/script-files/search-page.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/script-files/search.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/search.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/serialized-form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/tag-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/type-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/EnvPresenter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/EnvTester.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/class-use/EnvPresenter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/class-use/EnvTester.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/AbstractObservableField.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/Observable.Observer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/Observable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/SimulationState.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/ToolEnvironment.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/ToolField.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/class-use/AbstractObservableField.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/class-use/Observable.Observer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/class-use/Observable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/class-use/SimulationState.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/class-use/ToolEnvironment.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/class-use/ToolField.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/common/package-use.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/package-use.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/FieldView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/GameBridge.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/GameMenuView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/GamePlayView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/InfoPresenter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/InfoView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/LevelsView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/class-use/FieldView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/class-use/GameBridge.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/class-use/GameMenuView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/class-use/GamePlayView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/class-use/InfoPresenter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/class-use/InfoView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/class-use/LevelsView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/visualization/view/package-use.html" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2y3thkOZ3wRJEgAEGO3s0DICJV2" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Grinfind/IdeaProjects/IJA/IJA&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="IJA" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="IJA" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="IJA" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Python.FlaskServer">
+      <module name="IJA" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="IJA" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.59" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.59" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3415dae3-3af7-4ac4-b254-674626e3238a" name="Changes" comment="" />
+      <created>1749075205764</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1749075205764</updated>
+      <workItem from="1749075207027" duration="950000" />
+      <workItem from="1749118688658" duration="2841000" />
+      <workItem from="1749395183521" duration="11393000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

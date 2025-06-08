@@ -16,7 +16,7 @@
 package ija.ijaProject.common;
 
 import ija.ijaProject.game.Game;
-import ija.ijaProject.game.levels.NodeStateManager;
+import ija.ijaProject.game.simulation.NodeStateManager;
 import visualization.common.AbstractObservableField;
 import visualization.common.ToolField;
 import java.util.HashSet;
@@ -119,8 +119,6 @@ public class GameNode extends AbstractObservableField implements ToolField {
         if (game != null) {
             game.init();
         }
-
-        //NodeStateManager.getInstance().logMove(position.col(), position.row(), rotationCount % 4);
     }
 
     /**

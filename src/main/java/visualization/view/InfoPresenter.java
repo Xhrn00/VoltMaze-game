@@ -115,7 +115,6 @@ public class InfoPresenter implements Observable.Observer {
                     cur.getConnectors(),
                     sol.getConnectors()
             );
-            // btn.setText(String.valueOf(need));
             btn.setText(need >= 0 ? String.valueOf(need) : "?");
             updateTooltip(pos, btn);
             if (need == 0) {
